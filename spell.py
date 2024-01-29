@@ -1,47 +1,50 @@
-import pip._vendor.requests 
+import pip._vendor.requests
 
-def display_spell(spell_data):
-    print(f"Name: {spell_data['name']}")
-    print(f"Index: {spell_data['index']}")
-    print(f"URL: {spell_data['url']}")
-    print()
 
-def main():
-    url = "https://www.dnd5eapi.co/api/spells"
-    headers = {'Accept': 'application/json'}
+def spell_info(spell):
+    url = "https://www.dnd5eapi.co/api/spells/" + spell
+    headers = {"Accept": "application/json"}
 
     response = pip._vendor.requests.get(url, headers=headers)
-
     if response.status_code == 200:
-        spells_data = response.json()
-        spells = spells_data['results']
+        spell_data = response.json()
+        print(f"Range: {spell_data['range']}")
 
-        print("Welcome to the D&D 5e Spellbook!")
-        print(f"Total Spells: {spells_data['count']}\n")
 
-        while True:
-            print("Commands:")
-            print("1 - List all spells")
-            print("2 - Search for a spell by name")
-            print("3 - Exit")
+def main():
+    while True:
+        print("Commands:")
+        print("1 - List all spells")
+        print("2 - Get spell description by name")
+        print("3 - Exit")
 
-            choice = input("Enter your choice: ")
+        choice = input("Enter your choice: ")
 
-            if choice == '1':
-                print("\nList of Spells:")
-                for spell in spells:
-                    display_spell(spell)
-            elif choice == '2':
-                spell_name = input("Enter the spell name: ").lower()
-                matching_spells = [spell for spell in spells if spell_name in spell['name'].lower()]
-                print("\nMatching Spells:")
-                for spell in matching_spells:
-                    display_spell(spell)
-            elif choice == '3':
-                print("Goodbye!")
-                break
-            else:
-                print("Invalid choice. Please select a valid option.")
+        if choice == "1":
+            print("\nList of Spells:")
+            for i in range(10):
+                if i == 0:
+                    print("Cantrips:")
+                else:
+                    print("level " + str(i) + " spells:")
+                url = "https://www.dnd5eapi.co/api/spells?level=" + str(i)
+                headers = {"Accept": "application/json"}
+
+                response = pip._vendor.requests.get(url, headers=headers)
+                if response.status_code == 200:
+                    spells_data = response.json()
+                    spells = spells_data["results"]
+                    for spell in spells:
+                        print(f"    {spell['name']}")
+        elif choice == "2":
+            spell_name = input("Enter the spell name: ").lower()
+            spell_info(spell_name)
+        elif choice == "3":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+
 
 if __name__ == "__main__":
     main()
