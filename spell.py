@@ -1,5 +1,21 @@
 import pip._vendor.requests
 
+def spell_list():
+    print("\nList of Spells:")
+    for i in range(10):
+        if i == 0:
+            print("Cantrips:")
+        else:
+            print("level " + str(i) + " spells:")
+        url = "https://www.dnd5eapi.co/api/spells?level=" + str(i)
+        headers = {"Accept": "application/json"}
+
+        response = pip._vendor.requests.get(url, headers=headers)
+        if response.status_code == 200:
+            spells_data = response.json()
+            spells = spells_data["results"]
+            for spell in spells:
+                print(f"    {spell['name']}")
 
 def spell_info(spell):
     spell = spell.replace(' ', '-').lower()
@@ -49,36 +65,39 @@ def spell_info(spell):
     else:
         print(f"\n\nSpell not found, Sorry! :(\n\n")
 
+def class_list(class_name):
+    class_name = class_name.replace(' ', '-').lower()
+    print("\nList of " + str(class_name) + " Spells:")
+    url = "https://www.dnd5eapi.co/api/classes/" + str(class_name) + "/spells"
+    headers = {"Accept": "application/json"}
+
+    response = pip._vendor.requests.get(url, headers=headers)
+    if response.status_code == 200:
+        spells_data = response.json()
+        spells = spells_data["results"]
+        for spell in spells:
+            print(f"    {spell['name']}")
+
 
 def main():
     while True:
         print("Commands:")
         print("1 - List all spells")
         print("2 - Get spell by name")
-        print("3 - Exit")
+        print("3 - List spells by class")
+        print("4 - Exit")
 
         choice = input("Enter your choice: ")
 
         if choice == "1":
-            print("\nList of Spells:")
-            for i in range(10):
-                if i == 0:
-                    print("Cantrips:")
-                else:
-                    print("level " + str(i) + " spells:")
-                url = "https://www.dnd5eapi.co/api/spells?level=" + str(i)
-                headers = {"Accept": "application/json"}
-
-                response = pip._vendor.requests.get(url, headers=headers)
-                if response.status_code == 200:
-                    spells_data = response.json()
-                    spells = spells_data["results"]
-                    for spell in spells:
-                        print(f"    {spell['name']}")
+            spell_list()
         elif choice == "2":
             spell_name = input("Enter the spell name: ").lower()
             spell_info(spell_name)
         elif choice == "3":
+            class_name = input("Enter the class name: ").lower()
+            class_list(class_name)
+        elif choice == "4":
             print("Goodbye!")
             break
         else:
