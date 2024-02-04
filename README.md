@@ -8,7 +8,7 @@ Right now I'm just adding a "spell search" feature to pull up spell info but I'l
 
 TODO:
 - ~~figure out exactly how much info I want to show on a search~~
-- ~~display spells by class/~~subclass
+- ~~display spells by class/~~ subclass
 - Separate class spells by level (currently sorted but not clearly)
 - improve UI
-- figure out how to compile a python program
+- figure out how to compile a Python program
