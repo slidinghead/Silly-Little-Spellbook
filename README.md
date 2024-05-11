@@ -9,6 +9,11 @@ Right now I'm just adding a "spell search" feature to pull up spell info but I'l
 TODO:
 - ~~figure out exactly how much info I want to show on a search~~
 - ~~display spells by class/~~ subclass
-- Separate class spells by level (currently sorted but not clearly)
 - improve UI
-- figure out how to compile a Python program
+  - I'd like to figure out some front end stuff but that is low priority right now
+- ~~figure out how to compile a Python program~~ (Done with pyinstaller)
+  - (had to move TLS CA certificate to requests folder because it didn't have access as an exe)
+
+Abandoned:
+- Separate class spells by level (currently sorted but not clearly)
+  - Does not seem possible through this API
