@@ -1,4 +1,11 @@
 import pip._vendor.requests
+import os
+
+import sys
+
+import certifi
+
+os.environ['REQUESTS_CA_BUNDLE'] = os.path.join(os.path.dirname(sys.argv[0]), certifi.where())
 
 def spell_list():
     print("\nList of Spells:")
